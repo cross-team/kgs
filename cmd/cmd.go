@@ -61,6 +61,8 @@ func NewRootCmd(
 	)
 	err := rootCmd.AddSubCommand(startCmd)
 	if err != nil {
+		log.Println("error after rootCmd")
+		log.Println(err)
 		panic(err)
 	}
 	return rootCmd
