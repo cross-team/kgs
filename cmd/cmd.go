@@ -40,10 +40,11 @@ func NewRootCmd(
 					securityPolicy,
 					eventDispatcher,
 				)
-
+				log.Println("start before listen")
 				listenToSystemSignals(cancelFn, func() {
+					log.Println("on interupt")
 					if err := eventDispatcher.Close(); err != nil {
-						log.Println(err)
+						
 						panic(err)						
 					}
 				})
@@ -76,7 +77,7 @@ func Execute(rootCmd fw.Command) {
 
 func listenToSystemSignals(cancelFn context.CancelFunc, onInterrupt func()) {
 	signalChan := make(chan os.Signal, 1)
-
+	log.Println("after signal chan")
 	// listen to signals in order to provide a mechanism for an orderly, graceful shutdown,
 	// but to first allow it a chance to clean up.
 	// SIGINT is the interrupt signal. The terminal sends it to the foreground process when the user presses ctrl-c
