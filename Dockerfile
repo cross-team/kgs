@@ -26,4 +26,5 @@ COPY --from=builder /app/scripts/wait-for-it ./scripts/wait-for-it
 COPY --from=builder /app/app/adapter/db/migration ./app/adapter/db/migration
 COPY --from=builder /app/app/adapter/template/*.gohtml ./app/adapter/template/
 
+CMD ["./scripts/wait-for-it", "-s", "-t", "0", "db:5432", "--"]
 CMD ["./build/app", "start"]
