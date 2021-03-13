@@ -23,8 +23,8 @@ RUN apk add --no-cache bash
 
 COPY --from=builder /clublink/build/app ./build/app
 COPY --from=builder /clublink/scripts/wait-for-it ./scripts/wait-for-it
+COPY --from=builder /clublink/scripts/start.sh ./scripts/start.sh
 COPY --from=builder /clublink/app/adapter/db/migration ./app/adapter/db/migration
 COPY --from=builder /clublink/app/adapter/template/*.gohtml ./app/adapter/template/
 
-CMD ["./scripts/wait-for-it", "-s", "-t", "0", "db:5432", "--"]
-CMD ["./build/app", "start"]
+CMD ["./scripts/start.sh"]
