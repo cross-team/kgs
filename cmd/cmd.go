@@ -43,7 +43,8 @@ func NewRootCmd(
 
 				listenToSystemSignals(cancelFn, func() {
 					if err := eventDispatcher.Close(); err != nil {
-						panic(err)
+						log.Println(err)
+						panic(err)						
 					}
 				})
 			},
