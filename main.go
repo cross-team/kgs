@@ -55,7 +55,6 @@ func main() {
 	}
 
 	log.Println("dbconfig")
-	log.Println(dbConfig)
 	dbConnector := dep.InitDBConnector()
 	dbMigrationTool := dep.InitDBMigrationTool()
 

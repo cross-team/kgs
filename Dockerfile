@@ -1,6 +1,6 @@
-FROM golang:1.13.7-alpine AS builder
+FROM golang:1.13.1-alpine AS builder
 
-WORKDIR /app
+WORKDIR /clublink
 
 RUN apk add --no-cache git bash
 
@@ -15,16 +15,16 @@ COPY . .
 
 RUN go build -o build/app main.go
 
-FROM alpine:3.10
+FROM alpine:3.10 as production
 
-WORKDIR /app
+WORKDIR /clublink
 
 RUN apk add --no-cache bash
 
-COPY --from=builder /app/build/app ./build/app
-COPY --from=builder /app/scripts/wait-for-it ./scripts/wait-for-it
-COPY --from=builder /app/app/adapter/db/migration ./app/adapter/db/migration
-COPY --from=builder /app/app/adapter/template/*.gohtml ./app/adapter/template/
+COPY --from=builder /clublink/build/app ./build/app
+COPY --from=builder /clublink/scripts/wait-for-it ./scripts/wait-for-it
+COPY --from=builder /clublink/app/adapter/db/migration ./app/adapter/db/migration
+COPY --from=builder /clublink/app/adapter/template/*.gohtml ./app/adapter/template/
 
 CMD ["./scripts/wait-for-it", "-s", "-t", "0", "db:5432", "--"]
 CMD ["./build/app", "start"]
