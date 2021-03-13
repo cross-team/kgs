@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"strconv"
 
 	"github.com/asaskevich/EventBus"
@@ -35,7 +36,7 @@ func main() {
 	CacheSize := mustInt(env.GetEnv("CACHE_SIZE", "100"))
 
 	config := app.Config{
-		LogLevel:            fw.LogInfo,
+		LogLevel:            fw.LogDebug,
 		ServiceName:         serviceName,
 		ServiceEmailAddress: serviceEmailAddress,
 		MigrationRoot:       "app/adapter/db/migration",
@@ -52,6 +53,9 @@ func main() {
 		Password: password,
 		DbName:   dbName,
 	}
+
+	log.Println("dbconfig")
+	log.Println(dbConfig)
 	dbConnector := dep.InitDBConnector()
 	dbMigrationTool := dep.InitDBMigrationTool()
 
